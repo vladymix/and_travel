@@ -14,20 +14,19 @@ import com.fabricio.travel.listeners.IOnItemsSeleccted
 import com.squareup.picasso.Picasso
 
 
-class BagAdapter(val context: Context, listener: IOnItemsSeleccted<SuitCase>) : RecyclerView.Adapter<BagAdapter.BagHolder>() {
-    private var listener: IOnItemsSeleccted<SuitCase>
+class BagSelecctedAdapter(val context: Context) : RecyclerView.Adapter<BagSelecctedAdapter.BagHolder>() {
+
     private val ctx: Context
     private val list: ArrayList<SuitCase>
 
     init {
         this.ctx = context
         this.list = ArrayList()
-        this.listener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BagHolder {
         val artistView = LayoutInflater.from(context)
-            .inflate(R.layout.item_selecctable, parent, false)
+            .inflate(R.layout.item_seleccted, parent, false)
         return BagHolder(artistView)
     }
 
@@ -40,23 +39,13 @@ class BagAdapter(val context: Context, listener: IOnItemsSeleccted<SuitCase>) : 
         val item = list.get(position)
         holder.tvname.text = item.name
         holder.setImage(this.ctx, item.image)
-        holder.check.setOnCheckedChangeListener(null)
-        holder.check.isChecked = item.isChecked
-        holder.check.setOnCheckedChangeListener { _, _ ->
-            item.isCheckable = !item.isCheckable
-            listener.itemSeleccted(list.filter { t-> t.isCheckable })
+    }
+
+    fun setData(suitcase: List<SuitCase>?) {
+        suitcase?.let {
+            list.clear()
+            list.addAll(it)
         }
-
-
-    }
-
-    fun onChangeCheckable(item: SuitCase, position: Int) {
-        item.isCheckable = !item.isCheckable
-        notifyItemChanged(position)
-    }
-
-    fun addAll(suitcase: List<SuitCase>?) {
-        suitcase?.let { list.addAll(it) }
         this.notifyDataSetChanged()
     }
 
@@ -64,15 +53,15 @@ class BagAdapter(val context: Context, listener: IOnItemsSeleccted<SuitCase>) : 
     class BagHolder(view: View) : RecyclerView.ViewHolder(view) {
         val image: ImageView
         val tvname: TextView
-        val check: CheckBox
 
         init {
             image = view.findViewById(R.id.iv_suite)
             tvname = view.findViewById(R.id.tv_name)
-            check = view.findViewById(R.id.cb_item)
         }
 
         fun setImage(context: Context, urlImage: String?) {
+            image.setImageResource(R.drawable.ic_bag_empty)
+
             urlImage?.run {
                 Picasso.with(context)
                     .load(urlImage)

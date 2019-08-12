@@ -14,15 +14,17 @@ import retrofit.RetrofitError
 import retrofit.client.Response
 import rx.android.schedulers.AndroidSchedulers
 import androidx.recyclerview.widget.GridLayoutManager
+import com.fabricio.travel.adapters.BagSelecctedAdapter
+import com.fabricio.travel.commons.SuitCase
+import com.fabricio.travel.listeners.IOnItemsSeleccted
 
 
-class MainActivity : AppCompatActivity(), Callback<BagResponse> {
-
+class MainActivity : AppCompatActivity(), Callback<BagResponse>, IOnItemsSeleccted<SuitCase> {
 
     private lateinit var adapter: BagAdapter
+    private lateinit var adapterSeleccted: BagSelecctedAdapter
 
     override fun success(bagresponse: BagResponse?, response: Response?) {
-
         bagresponse?.run {
             adapter.addAll(bagresponse.suitcase)
         }
@@ -38,19 +40,26 @@ class MainActivity : AppCompatActivity(), Callback<BagResponse> {
 
     }
 
+    override fun itemSeleccted(items: List<SuitCase>) {
+
+        adapterSeleccted.setData(items)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         litView.setLayoutManager(GridLayoutManager(this, 1))
+        itemsSelected.setLayoutManager(GridLayoutManager(this, 1))
 
-        this.adapter = BagAdapter(this)
+        this.adapter = BagAdapter(this, this)
+        this.adapterSeleccted = BagSelecctedAdapter(this)
+
         this.litView.adapter = this.adapter
-        requestBagList()
+        this.itemsSelected.adapter = this.adapterSeleccted
 
-
+        this.requestBagList()
     }
-
 
     private fun requestBagList() {
         BagServiceAdapter.getBagList()
