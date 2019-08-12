@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">SplashActivity</string>
+    <string name="app_name">Mochila de viaje</string>
     <string name="network_error">Error en la conexión</string>
 </resources>

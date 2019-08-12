@@ -58,7 +58,7 @@ class BagAdapter(val context: Context) : RecyclerView.Adapter<BagAdapter.BagHold
             urlImage?.run {
                 Picasso.with(context)
                     .load(urlImage)
-                    .placeholder(R.drawable.ic_launcher_background)
+                    .placeholder(R.drawable.ic_bag_empty)
                     .into(image)
             }
         }
