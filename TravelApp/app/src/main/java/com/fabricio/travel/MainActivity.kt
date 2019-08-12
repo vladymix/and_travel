@@ -1,22 +1,20 @@
 package com.fabricio.travel
 
-import android.app.PendingIntent.getActivity
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.fabricio.travel.adapters.BagAdapter
-import com.fabricio.travel.services.BagResponse
-import com.fabricio.travel.services.BagServiceAdapter
-import kotlinx.android.synthetic.main.activity_main.*
-
-import retrofit.Callback;
-import retrofit.RetrofitError
-import retrofit.client.Response
-import rx.android.schedulers.AndroidSchedulers
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.fabricio.travel.adapters.BagAdapter
 import com.fabricio.travel.adapters.BagSelecctedAdapter
 import com.fabricio.travel.commons.SuitCase
 import com.fabricio.travel.listeners.IOnItemsSeleccted
+import com.fabricio.travel.services.BagResponse
+import com.fabricio.travel.services.BagServiceAdapter
+import kotlinx.android.synthetic.main.activity_main.*
+import retrofit.Callback
+import retrofit.RetrofitError
+import retrofit.client.Response
+import rx.android.schedulers.AndroidSchedulers
 
 
 class MainActivity : AppCompatActivity(), Callback<BagResponse>, IOnItemsSeleccted<SuitCase> {
@@ -49,14 +47,14 @@ class MainActivity : AppCompatActivity(), Callback<BagResponse>, IOnItemsSelecct
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        litView.setLayoutManager(GridLayoutManager(this, 1))
-        itemsSelected.setLayoutManager(GridLayoutManager(this, 1))
+        rv_list.setLayoutManager(GridLayoutManager(this, 1))
+        rv_seleccted.setLayoutManager(GridLayoutManager(this, 1))
 
         this.adapter = BagAdapter(this, this)
         this.adapterSeleccted = BagSelecctedAdapter(this)
 
-        this.litView.adapter = this.adapter
-        this.itemsSelected.adapter = this.adapterSeleccted
+        this.rv_list.adapter = this.adapter
+        this.rv_seleccted.adapter = this.adapterSeleccted
 
         this.requestBagList()
     }

@@ -10,7 +10,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
             android:layout_weight="0.5"
-            android:id="@+id/litView"
+            android:id="@+id/rv_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
@@ -27,7 +27,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
             android:layout_weight="0.5"
-            android:id="@+id/itemsSelected"
+            android:id="@+id/rv_seleccted"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
